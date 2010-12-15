@@ -11,10 +11,20 @@ import android.net.Uri;
 import com.google.android.maps.MapView;
 import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.AmarinoIntent;
-
+/**
+ * 
+ * Amarino based interface for lilypad powered "Want-Band"
+ * 
+ * Based on the Sensorgraph.java template program written by Bonifaz Kaufmann
+ * 
+ * @author Jack Anderson - December 2010
+ *
+ */
 public class WantBand extends Activity {
 	
+	//device address
     private static final String DEVICE_ADDRESS = "00:06:66:04:B0:A5";
+    
     private TextView inputButton;
     
     private ArduinoReceiver arduinoReceiver = new ArduinoReceiver();
@@ -64,22 +74,15 @@ public class WantBand extends Activity {
 			String query = null;
 			// the device address from which the data was sent, we don't need it here but to demonstrate how you retrieve it
 			final String address = intent.getStringExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS);
-			
-			// the type of data which is added to the intent
 			final int dataType = intent.getIntExtra(AmarinoIntent.EXTRA_DATA_TYPE, -1);
 			
-			// we only expect String data though, but it is better to check if really string was sent
-			// later Amarino will support differnt data types, so far data comes always as string and
-			// you have to parse the data to the type you have sent from Arduino, like it is shown below
+	
 			if (dataType == AmarinoIntent.STRING_EXTRA){
 				data = intent.getStringExtra(AmarinoIntent.EXTRA_DATA);
 				
 				if (data != null){
-					//mValueTV.setText(data);
 					try {
-						// since we know that our string value is an int number we can parse it to an integer
-						//final int sensorReading = Integer.parseInt(data);
-						//mGraph.addDataPoint(sensorReading);
+
 						inputButton.setText(data);
 						if (data.equals("1")){query = "restaurants";};
 						if (data.equals("2")){query = "entertainment";};
